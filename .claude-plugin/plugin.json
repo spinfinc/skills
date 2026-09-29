@@ -1,0 +1,12 @@
+{
+  "name": "spinf",
+  "version": "0.1.0",
+  "description": "Agent skills for building with the spinf scoring API.",
+  "author": {
+    "name": "Spinf Inc.",
+    "url": "https://spinf.com"
+  },
+  "homepage": "https://spinf.com",
+  "repository": "https://github.com/spinfinc/skills",
+  "license": "MIT"
+}
