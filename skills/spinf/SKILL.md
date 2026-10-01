@@ -15,7 +15,8 @@ used for decisions or analysis, calibrate them (against labelled items or a base
 combine several cells into a macro cell: see [Calibrate, then aggregate](#calibrate-then-aggregate-macro-cells).
 
 Full docs, as Markdown: https://spinf.com/llms.txt (index), https://spinf.com/docs/scoring-api.md (reference),
-https://spinf.com/docs/writing-questions.md, https://spinf.com/docs/calibration.md, https://spinf.com/docs/limits.md.
+https://spinf.com/docs/writing-questions.md, https://spinf.com/docs/calibration.md, https://spinf.com/docs/limits.md,
+https://spinf.com/docs/prompt-packs.md (ready-made packs such as content moderation).
 Fetch the reference before relying on a field or limit not covered here.
 
 ## Setup
@@ -147,6 +148,34 @@ wordings, which baseline.
    review). Then freeze the template, options and examples.
 5. **Ask everything in one read.** Each extra question costs only its own tokens; the content is read once per call.
    Use that for the checks you would otherwise skip, and for the extra wordings that make up macro cells.
+
+## Prompt-packs (content moderation)
+
+A pack is a ready-made, calibrated set of questions hosted by spinf. When the job is content moderation, use the
+`spinf/moderation` pack instead of writing moderation questions, and add the user's own questions to the same call:
+the content is read once and billed once for both.
+
+```json
+"scoring": {
+  "packs": [ { "id": "spinf/moderation", "context": "forum" } ],
+  "queries": [ { "id": "on_topic", "template": "\n\nIs this post about cooking?\nAnswer:{?}", "options": [" yes", " no"] } ]
+}
+```
+
+- `GET https://api.spinf.com/v1/packs` (no key) lists the packs: versions, `contexts` (moderation: `ai` for messages
+  to an assistant, `forum` for posts on a platform), the categories with their default `threshold` (`null` = reported,
+  never decides) and the decision modes. Read thresholds from there; don't hardcode them. Pin `version` in production.
+- Response: `results[].packs[]` = `{id, version, context, categories: {<id>: {score, percentile, flagged}},
+  decision}`. `score` is calibrated 0–1 and comparable across categories; `percentile` places it on normal traffic;
+  `flagged` = over the category's threshold (`null` when it has none). `decision.unsafe` is the verdict.
+- `decision.mode`: `micro_layer` (default, a layer trained on labelled data), `per_category` (any category over its
+  threshold; override them with `decision.thresholds`) or `max` (the highest category against one `threshold`).
+  Choose thresholds on the user's own labelled sample, as for any question.
+- Rules: text only (media parts → `400 pack_media_not_supported`); `spinf-12b` only; leave
+  `scoring.case_insensitive` out (the pack sets it, `400 pack_conflict`); the whole content is wrapped in the pack's
+  context, and the user's own questions read it wrapped too; don't use the `tax.` / `gen.` id prefixes.
+- Cost: no surcharge; moderation adds 1,626 question tokens per content (about 1,710 billed tokens for a typical
+  message, content included).
 
 ## Cost
 
