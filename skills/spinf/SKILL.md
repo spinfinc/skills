@@ -170,6 +170,9 @@ the content is read once and billed once for both.
   `flagged` = over the category's threshold (`null` when it has none). `decision.unsafe` is the verdict.
 - `decision.mode`: `micro_layer` (default, a layer trained on labelled data), `per_category` (any category over its
   threshold; override them with `decision.thresholds`) or `max` (the highest category against one `threshold`).
+  From 0.1.2, `decision.critical` (default `["selfharm", "child"]`) lists categories that make the content unsafe
+  whenever they are flagged, in every mode; the response then has `decision.critical` and, when that changed the
+  outcome, `"by": "critical"`. Send `"critical": []` to turn it off.
   Choose thresholds on the user's own labelled sample, as for any question.
 - Rules: text only (media parts → `400 pack_media_not_supported`); `spinf-12b` only; leave
   `scoring.case_insensitive` out (the pack sets it, `400 pack_conflict`); the whole content is wrapped in the pack's
