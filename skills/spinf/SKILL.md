@@ -170,7 +170,7 @@ the content is read once and billed once for both.
   `flagged` = over the category's threshold (`null` when it has none). `decision.unsafe` is the verdict.
 - `decision.mode`: `micro_layer` (default, a layer trained on labelled data), `per_category` (any category over its
   threshold; override them with `decision.thresholds`) or `max` (the highest category against one `threshold`).
-  From 0.1.2, `decision.critical` (default `["selfharm", "child"]`) lists categories that make the content unsafe
+  `decision.critical` (0.1.3 default `["selfharm", "child"]`; 0.1.1 none) lists categories that make the content unsafe
   whenever they are flagged, in every mode; the response then has `decision.critical` and, when that changed the
   outcome, `"by": "critical"`. Send `"critical": []` to turn it off.
   Choose thresholds on the user's own labelled sample, as for any question.
