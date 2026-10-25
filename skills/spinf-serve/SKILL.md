@@ -45,8 +45,8 @@ spinf-serve serve spinf/gemma-4-12b-fp8     # downloads the checkpoint on first 
 
 The name is the Hugging Face repo (public, under `spinf/`), pinned by revision in the package's manifests, so the first
 start downloads exactly the calibrated checkpoint. The hosted names (`spinf-12b`, `spinf-31b`, `qwen3.8-27b-s`) are
-aliases, so a client written for the hosted API works unchanged. Another Hub checkpoint of a supported family (Gemma 4,
-Qwen3.5) can be served by its path (`spinf-serve serve google/gemma-4-12B`): quantized at load, served under that
+aliases, so a client written for the hosted API works unchanged. Another Hub checkpoint of a supported architecture family (Gemma 4, or
+the Qwen3.5 architecture that Qwen3.8 is built on) can be served by its path (`spinf-serve serve google/gemma-4-12B`): quantized at load, served under that
 name, not batch-invariant.
 
 One GPU per server process; several GPUs are several processes behind your own load balancer. A process never shares
