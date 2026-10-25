@@ -1,7 +1,7 @@
 {
   "name": "spinf",
-  "version": "0.1.0",
-  "description": "Agent skills for building with the spinf scoring API.",
+  "version": "0.2.0",
+  "description": "Agent skills for building with spinf: the scoring API (hosted or self-hosted), the spinf-serve server, and prompt packs.",
   "author": {
     "name": "Spinf Inc.",
     "url": "https://spinf.com"

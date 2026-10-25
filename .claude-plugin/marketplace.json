@@ -1,6 +1,6 @@
 {
   "name": "spinfinc",
-  "description": "Agent skills for building with the spinf scoring API.",
+  "description": "Agent skills for building with spinf: the scoring API (hosted or self-hosted), the spinf-serve server, and prompt packs.",
   "owner": {
     "name": "Spinf Inc.",
     "url": "https://spinf.com"
@@ -8,7 +8,7 @@
   "plugins": [
     {
       "name": "spinf",
-      "description": "Classify and score content with spinf: request rules, reading the scores, designing questions, cost and errors",
+      "description": "Three skills: spinf (call the scoring API, hosted or self-hosted: request rules, reading scores, designing questions, cost, errors), spinf-serve (install, configure and deploy the server) and spinf-packs (author, calibrate, validate and publish prompt packs)",
       "source": "./"
     }
   ]
