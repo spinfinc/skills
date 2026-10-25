@@ -135,7 +135,9 @@ the hosted API runs it too, so the three agree to the fixture's rounding.
 - A version never changes once published. Refit thresholds or calibration: new patch version. Changed or added
   questions, reads or categories: new minor. A new model: a new pack (the constants do not transfer).
 - The official `spinf/` packs are published in spinf-prompts and served by the hosted API; a community pack is served by
-  any spinf-serve started with its source. A caller runs an edited copy of a pack through spinf-client's `pack_file=`
+  any spinf-serve started with its source. Every known pack, official or not, is listed in spinf-serve's `PACKS.md`
+  (https://github.com/spinfinc/spinf-serve/blob/main/PACKS.md); a published pack gets listed through the "List my pack"
+  issue form there (repository, ids, model, a line on the job, licence). A caller runs an edited copy of a pack through spinf-client's `pack_file=`
   (its questions go out as ordinary queries, the decision is made locally).
 - Credit the data: a pack carries questions and constants, and the sample they were measured on is named with its
   licence in the repository, not bundled unless its terms allow it.

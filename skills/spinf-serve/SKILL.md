@@ -99,7 +99,9 @@ effective features and limits, so a client can size a request before sending.
 
 The server preloads the official packs of the model it serves from spinf-prompts at the tag the release pins, and
 loads more from `--packs` sources: `github:<owner>/<repo>[@<tag>][#<path>]` (a repo with a `prompt-packs.json`; a tag
-or commit is reproducible, a branch is not; `GITHUB_TOKEN` for a private one) or a local folder.
+or commit is reproducible, a branch is not; `GITHUB_TOKEN` for a private one) or a local folder. Known packs from every
+publisher, with their models and sources: https://github.com/spinfinc/spinf-serve/blob/main/PACKS.md (for example
+`--packs github:thinkingtext/spinf-news-pack@0.1.0` for oil, equity and market news).
 
 ```sh
 spinf-serve serve spinf/gemma-4-12b-fp8 --packs github:acme/prompt-packs@v1.2 --packs ./my-packs
