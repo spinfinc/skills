@@ -127,9 +127,14 @@ server logs it and starts without the official packs; a `--packs` source that ca
   must be measured on the server that will run.
 - **Memory.** The 12B fp8 fits a 24 GB card with media on; `--no-media` frees the embedders when only text is served.
   The Qwen int4 model needs the whole 24 GB card.
-- **Container.** No official image is published yet; a Dockerfile is `FROM` an NVIDIA CUDA 13 runtime image with
-  Python 3.12, `pip install "spinf-serve[server]"`, the model directory mounted at `--model-dir` or downloaded at
-  first start (`HF_HOME` on a volume), `EXPOSE 8000`, and the health check on `/readyz`.
+- **Container.** `ghcr.io/spinfinc/spinf-serve` (tags: the version, `latest`) is spinf-serve from PyPI on
+  `python:3.12-slim` with nothing baked in; the host needs the NVIDIA driver and the NVIDIA Container Toolkit only.
+  `docker run --gpus all -p 8000:8000 -v spinf-cache:/root/.cache ghcr.io/spinfinc/spinf-serve [serve arguments]`: the
+  entrypoint is `spinf-serve serve`, so flags go after the image name and `SPINF_*` variables work with `-e`. The volume
+  at `/root/.cache` keeps the downloaded model, the compile caches and the official packs: the first start downloads
+  (13 GB for the 12B) and compiles, later starts are ready in about two minutes. Its `HEALTHCHECK` is `/readyz`. A local
+  snapshot: `-v /path:/model:ro --model-dir /model`; a shared model volume: `-e SPINF_CACHE_DIRS=/models -v /path:/models:ro`.
+  Pick the GPU with `--gpus '"device=1"'`.
 
 ## Troubleshooting
 
